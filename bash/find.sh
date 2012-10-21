@@ -1,11 +1,10 @@
 #!/bin/bash
 args=("$@")
 type="-type"
-name="-name"
+name="-name"	
 NAME=""
 TYPE=""
 DIR=""
-SYMHACK="-e "
 
 askMe(){
 if [ "-$TYPE" "$1" ]; then
