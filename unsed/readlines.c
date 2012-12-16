@@ -1,29 +1,27 @@
 #include "readlines.h"
 
+#define CHUNK_SIZE 128
 
 
-
-struct RL* rl_open(int x, size_t max_size){
+struct RL* rl_open(int fd, size_t max_size){
     struct RL* _rl = malloc(sizeof(struct RL));
     assert(_rl != NULL);
-    _rl->fd = x;
+    _rl->fd = fd;
     _rl->max_size = max_size;
     return _rl;
 }
 
-int rl_close(struct RL* x){
-    assert(x != NULL);
-    int ret = close(x->fd);
-    free(x);
+size_t rl_max_size(struct RL* rl){
+    assert(rl != NULL);
+    return rl->max_size;
+}
+
+int rl_close(struct RL* rl){
+    assert(rl != NULL);
+    int ret = close(rl->fd);
+    free(rl);
     return ret;
 }
-
-size_t rl_max_size(struct RL* x){
-    assert(x != NULL);
-    return x->max_size;
-}
-
-
 
 int rl_readline(struct RL* rl, char* buf, size_t buf_size){
     assert(rl != NULL);
