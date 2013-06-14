@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <sys/epoll.h>
 #include <signal.h>
+#include <sys/poll.h>
 #include <sys/stat.h>
 #include <sys/sendfile.h>
 
@@ -19,10 +20,12 @@ int main (int argc, char** argv){
     struct epoll_event ev[argc-1], events[argc-1];
     int epoll_fd=epoll_create(argc-1);
     for (int i = 0; i <  (argc-1)/2; i ++){
-        ev[2*i].events = EPOLLIN;
+        ev[2*i].events = POLLIN;
         int res = epoll_ctl(epoll_fd, EPOLL_CTL_ADD,atoi(argv[2*i+1]), &ev[2*i]);
-        ev[2*i+1].events = EPOLLOUT;
+        printf("res 2i %i, error %i\n", res, errno);
+        ev[2*i+1].events = POLLOUT;
         res = epoll_ctl(epoll_fd, EPOLL_CTL_ADD,atoi(argv[2*i+2]), &ev[2*i+1]);
+        printf("res 2i+1 %i, error %s\n", res,strerror(errno));
     }
     int n = (argc-1)/2;
     while (n>0) {
