@@ -20,10 +20,10 @@ int main (int argc, char** argv){
     struct epoll_event ev[argc-1], events[argc-1];
     int epoll_fd=epoll_create(argc-1);
     for (int i = 0; i <  (argc-1)/2; i ++){
-        ev[2*i].events = POLLIN;
+        ev[2*i].events = EPOLLIN;
         int res = epoll_ctl(epoll_fd, EPOLL_CTL_ADD,atoi(argv[2*i+1]), &ev[2*i]);
         printf("res 2i %i, error %i\n", res, errno);
-        ev[2*i+1].events = POLLOUT;
+        ev[2*i+1].events = EPOLLOUT;
         res = epoll_ctl(epoll_fd, EPOLL_CTL_ADD,atoi(argv[2*i+2]), &ev[2*i+1]);
         printf("res 2i+1 %i, error %s\n", res,strerror(errno));
     }
