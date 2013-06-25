@@ -1,0 +1,3 @@
+9<> 1.txt
+exec 10<> 2.txt
+exec ./cp-poll 9 10
